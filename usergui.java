@@ -15,8 +15,10 @@ class UserGUI{
     JTextField messagefield;
     JPanel spanel;
     JPanel sbspanel;
+    JPanel npanel;
     JTextArea feed;
     JButton sendbutton;
+    JButton connectbutton;
     Socket socket;
     InputStream inputToServer;
     OutputStream outputFromServer;
@@ -44,17 +46,28 @@ class UserGUI{
         }
     }
 
-    public void requestConnection(){
+    public boolean requestConnection(){
         IP = JOptionPane.showInputDialog(null, "IP Address");
         if(IP==null){
-            System.exit(0);
+            if(firstprint){
+                System.exit(0);
+                return false;
+            }else{
+                return false;
+            }
         }
         String iport = JOptionPane.showInputDialog(null, "Port");
         if(iport == null){
-            System.exit(0);
+            if(firstprint){
+                System.exit(0);
+                return false;
+            }else{
+                return false;
+            }
         }else{
             port = Integer.parseInt(iport);
         }
+        return true;
     }
 
     public void connectToServer(){
@@ -92,10 +105,18 @@ class UserGUI{
 
         sendbutton = new JButton("Send");
         sendbutton.setSize(frame.getWidth(), 50);
-        sendbutton.addActionListener(new ButtonListener());
+        sendbutton.addActionListener(new SendButtonListener());
         sbspanel.add(sendbutton);
         spanel.add(sbspanel);
 
+        npanel = new JPanel();
+
+        connectbutton = new JButton("Change Connection");
+        connectbutton.addActionListener(new ConnectButtonListener());
+        connectbutton.setSize(frame.getWidth(), 50);
+        npanel.add(connectbutton);
+
+        frame.add(npanel, BorderLayout.NORTH);
         frame.add(spanel, BorderLayout.SOUTH);
         frame.setVisible(true);
     }
@@ -103,7 +124,7 @@ class UserGUI{
         UserGUI u = new UserGUI();
     }
 
-    public class ButtonListener implements ActionListener{
+    public class SendButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
             serverPrintOut.println(messagefield.getText());
@@ -111,6 +132,15 @@ class UserGUI{
         }
     }
     
+    public class ConnectButtonListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e){
+            if(requestConnection()){
+                connectToServer();
+            }
+        }
+    }
+
     public class EnterListener implements KeyListener{
         @Override
         public void keyPressed(KeyEvent e){
