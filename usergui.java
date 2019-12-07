@@ -45,7 +45,15 @@ class UserGUI{
 
     public void requestConnection(){
         IP = JOptionPane.showInputDialog(null, "IP Address");
-        port = Integer.parseInt(JOptionPane.showInputDialog(null, "Port"));
+        if(IP==null){
+            System.exit(0);
+        }
+        String iport = JOptionPane.showInputDialog(null, "Port");
+        if(iport == null){
+            System.exit(0);
+        }else{
+            port = Integer.parseInt(iport);
+        }
     }
 
     public void connectToServer(){
@@ -74,7 +82,7 @@ class UserGUI{
         
         spanel = new JPanel();
         spanel.setLayout(new BoxLayout(spanel, BoxLayout.PAGE_AXIS));
-        
+
         messagefield = new JTextField("Enter Message Here");
         messagefield.addKeyListener(new EnterListener());
         spanel.add(messagefield);
