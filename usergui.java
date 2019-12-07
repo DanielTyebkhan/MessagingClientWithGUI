@@ -56,7 +56,9 @@ class UserGUI{
             scanner = new Scanner(inputToServer, "UTF-8");
             serverPrintOut = new PrintWriter(new OutputStreamWriter(outputFromServer, "UTF-8"), true);
         }catch(Exception e){
-            System.out.println(e);
+            JOptionPane.showMessageDialog(frame, "There was an error in connection. Please Try Again", "Connection Error", JOptionPane.ERROR_MESSAGE);
+            requestConnection();
+            connectToServer();
         }
     }
 
