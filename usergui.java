@@ -74,8 +74,11 @@ class UserGUI{
         
         spanel = new JPanel();
         spanel.setLayout(new BoxLayout(spanel, BoxLayout.PAGE_AXIS));
+        
         messagefield = new JTextField("Enter Message Here");
+        messagefield.addKeyListener(new EnterListener());
         spanel.add(messagefield);
+
         sendbutton = new JButton("Send");
         sendbutton.addActionListener(new ButtonListener());
         spanel.add(sendbutton);
@@ -92,6 +95,24 @@ class UserGUI{
         public void actionPerformed(ActionEvent e){
             serverPrintOut.println(messagefield.getText());
             messagefield.setText("");
+        }
+    }
+    
+    public class EnterListener implements KeyListener{
+        @Override
+        public void keyPressed(KeyEvent e){
+            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                serverPrintOut.println(messagefield.getText());
+                messagefield.setText("");
+            }
+        }
+        @Override
+        public void keyReleased(KeyEvent e){
+
+        }
+        @Override
+        public void keyTyped(KeyEvent e){
+
         }
     }
 }
