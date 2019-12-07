@@ -1,3 +1,0 @@
-//ip is find with netstat -a -b)
-//port is 9991
-//pkgmgr /iu:”TelnetClient” (command line to enable telnet on windows)
