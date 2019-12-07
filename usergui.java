@@ -14,6 +14,7 @@ class UserGUI{
     JFrame frame;
     JTextField messagefield;
     JPanel spanel;
+    JPanel sbspanel;
     JTextArea feed;
     JButton sendbutton;
     Socket socket;
@@ -83,13 +84,17 @@ class UserGUI{
         spanel = new JPanel();
         spanel.setLayout(new BoxLayout(spanel, BoxLayout.PAGE_AXIS));
 
+        sbspanel = new JPanel();
+
         messagefield = new JTextField("Enter Message Here");
         messagefield.addKeyListener(new EnterListener());
         spanel.add(messagefield);
 
         sendbutton = new JButton("Send");
+        sendbutton.setSize(frame.getWidth(), 50);
         sendbutton.addActionListener(new ButtonListener());
-        spanel.add(sendbutton);
+        sbspanel.add(sendbutton);
+        spanel.add(sbspanel);
 
         frame.add(spanel, BorderLayout.SOUTH);
         frame.setVisible(true);
