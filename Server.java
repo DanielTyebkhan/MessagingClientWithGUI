@@ -5,6 +5,9 @@ public class Server{
     public static final int PORT = 9991;
     public static ArrayList<ConnectionThread> clients;
     public static HashMap clientMap;
+
+    public static final String LOCATION = Server.class.getProtectionDomain().getCodeSource().getLocation().getFile() +"users.txt";
+
     public static void main(String[] args){
         clients = new ArrayList <>();
         generateHash();
@@ -32,7 +35,7 @@ public class Server{
     
     public static void generateHash(){
         System.out.println("Generating User Hashmap");
-        File users = new File("users.txt");
+        File users = new File(LOCATION);
         try(Scanner ireader = new Scanner(users)){
             int totalLines = 0;
             while(ireader.hasNextLine()){
@@ -67,8 +70,7 @@ public class Server{
 	
 	public static void setUsername(String ip, String username){
 		try{
-		    String location = Server.class.getProtectionDomain().getCodeSource().getLocation().getFile() +"users.txt";
-			BufferedWriter writer = new BufferedWriter(new FileWriter(location, true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(LOCATION, true));
 			writer.write(ip);
 			writer.newLine();
 			writer.write(username);
