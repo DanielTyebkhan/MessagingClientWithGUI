@@ -6,7 +6,7 @@ public class Server{
     public static ArrayList<ConnectionThread> clients;
     public static HashMap clientMap;
     public static void main(String[] args){
-        clients = new ArrayList <ConnectionThread>();
+        clients = new ArrayList <>();
         generateHash();
         connectToServer();
     }
@@ -22,11 +22,11 @@ public class Server{
                     client.start();
                     clients.add(client);
                 }catch(Exception e){
-                    System.out.println(e);
+                    System.out.println(e + "could not connect client to server");
                 }
             }
         }catch(Exception e){
-            System.out.println(e);
+            System.out.println(e + "could not connect client to server");
         }
     }
     
@@ -46,10 +46,10 @@ public class Server{
                     clientMap.put(sreader.nextLine(), sreader.nextLine());
                 }
             }catch(Exception e){
-                System.out.println(e);
+                System.out.println(e + "error putting elements in hash");
             }
         }catch(Exception e){
-            System.out.println(e);
+            System.out.println(e + "error generating hash");
         }
         System.out.println("User Hashmap Generated");
     }
@@ -67,7 +67,8 @@ public class Server{
 	
 	public static void setUsername(String ip, String username){
 		try{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(Server.class.getProtectionDomain().getCodeSource().getLocation().getFile() +"users.txt", true));
+		    String location = Server.class.getProtectionDomain().getCodeSource().getLocation().getFile() +"users.txt";
+			BufferedWriter writer = new BufferedWriter(new FileWriter(location, true));
 			writer.write(ip);
 			writer.newLine();
 			writer.write(username);
@@ -75,7 +76,7 @@ public class Server{
 			writer.close();
 			generateHash();
 		}catch(Exception e){
-			System.out.println(e);
+			System.out.println(e + "error setting username");
 		}
 	}
 }
