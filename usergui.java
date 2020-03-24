@@ -7,33 +7,39 @@ import java.util.*;
 import java.awt.event.*;
 
 class UserGUI{
-    String IP;
-    int port;
-    PrintWriter out;
-    BufferedReader in;
-    JFrame frame;
-    JTextField messagefield;
-    JPanel spanel;
-    JPanel sbspanel;
-    JPanel npanel;
-    JTextArea feed;
-    JButton sendbutton;
-    JButton connectbutton;
-    Socket socket;
-    InputStream inputToServer;
-    OutputStream outputFromServer;
-    Scanner scanner;
-    PrintWriter serverPrintOut;
-    Boolean firstprint;
+    private String IP;
+    private int port;
+    private JFrame frame;
+    private JTextField messagefield;
+    private JPanel spanel;
+    private JPanel sbspanel;
+    private JPanel npanel;
+    private JTextArea feed;
+    private JButton sendbutton;
+    private JButton connectbutton;
+    private Socket socket;
+    private InputStream inputToServer;
+    private OutputStream outputFromServer;
+    private Scanner scanner;
+    private PrintWriter serverPrintOut;
+    private Boolean firstprint;
 
+    /**
+     * Constructor
+     */
     public UserGUI(){
         firstprint = true;
-        requestConnection();
+        while(!requestConnection()){
+            requestConnection();
+        }
         connectToServer();
         initializeGUI();
         runMessaging();
     }
 
+    /**
+     * Sets the text in the window
+     */
     public void runMessaging(){
         while(scanner.hasNextLine()){
             String line = scanner.nextLine();
@@ -46,6 +52,10 @@ class UserGUI{
         }
     }
 
+    /**
+     * Attempts to connect to the inputted ip and port
+     * @return true if the connection is successful, else false
+     */
     public boolean requestConnection(){
         IP = JOptionPane.showInputDialog(null, "IP Address");
         if(IP==null){
@@ -70,6 +80,9 @@ class UserGUI{
         return true;
     }
 
+    /**
+     * Connects the user to the server
+     */
     public void connectToServer(){
         try{
             socket = new Socket(IP, port);
@@ -84,6 +97,9 @@ class UserGUI{
         }
     }
 
+    /**
+     * Creates the GUI
+     */
     public void initializeGUI(){
         frame = new JFrame("Messaging Client");
         frame.setSize(500, 500);
@@ -120,10 +136,10 @@ class UserGUI{
         frame.add(spanel, BorderLayout.SOUTH);
         frame.setVisible(true);
     }
-    public static void main(String[] args){
-        UserGUI u = new UserGUI();
-    }
 
+    /**
+     * Sends messages when the send button is clicked
+     */
     public class SendButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
@@ -131,7 +147,10 @@ class UserGUI{
             messagefield.setText("");
         }
     }
-    
+
+    /**
+     * Creates a new connection when the connect button is clicked
+     */
     public class ConnectButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
@@ -141,6 +160,9 @@ class UserGUI{
         }
     }
 
+    /**
+     * Sends a message when 'enter' is pressed
+     */
     public class EnterListener implements KeyListener{
         @Override
         public void keyPressed(KeyEvent e){
@@ -157,5 +179,9 @@ class UserGUI{
         public void keyTyped(KeyEvent e){
 
         }
+    }
+
+    public static void main(String[] args){
+        UserGUI u = new UserGUI();
     }
 }
