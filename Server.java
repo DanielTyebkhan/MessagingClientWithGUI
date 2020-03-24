@@ -1,6 +1,10 @@
 import java.net.*;
 import java.io.*;
 import java.util.*;
+
+/**
+ * @author Daniel Tyebkhan
+ */
 public class Server{ 
     public static final int PORT = 9991;
     public static final String LOCATION = Server.class.getProtectionDomain().getCodeSource().getLocation().getFile() +"users.txt";
@@ -14,6 +18,9 @@ public class Server{
         connectToServer();
     }
 
+    /**
+     * Starts the server
+     */
     public static void connectToServer(){
         try(ServerSocket serverSocket = new ServerSocket(PORT)){
             System.out.println("Server is now Live on Port " + PORT);
@@ -32,7 +39,10 @@ public class Server{
             System.out.println(e + "could not connect client to server");
         }
     }
-    
+
+    /**
+     * Generates the userbase from the input file
+     */
     public static void generateHash(){
         System.out.println("Generating User Hashmap");
         File users = new File(LOCATION);
@@ -56,7 +66,12 @@ public class Server{
         }
         System.out.println("User Hashmap Generated");
     }
-    
+
+    /**
+     * Gets the username from a client
+     * @param a The client's ip address
+     * @return The username
+     */
     public static String getUsername(String a){
         System.out.println("ip is: " + a);
 		if(clientMap.containsKey(a)){
@@ -67,7 +82,12 @@ public class Server{
 			return "unnamed";
 		}
     }
-	
+
+    /**
+     * Sets a new client's username
+     * @param ip The client's ip
+     * @param username The username to set
+     */
 	public static void setUsername(String ip, String username){
 		try{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(LOCATION, true));
@@ -82,6 +102,11 @@ public class Server{
 		}
 	}
 
+    /**
+     * Sends messages to the clients
+     * @param name The name of the client sending the message
+     * @param line The message the client is sending
+     */
 	public static void printMessage(String name, String line){
         for(ConnectionThread c: Server.clients){
             c.serverPrintOut.println(name + ": " + line);
