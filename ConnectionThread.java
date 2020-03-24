@@ -1,15 +1,24 @@
 import java.io.*;
 import java.util.*;
 import java.net.*;
+
+/**
+ * @author Daniel Tyebkhan
+ */
 public class ConnectionThread extends Thread{
-    InputStream inputToServer;
-    OutputStream outputFromServer;
-    Scanner scanner;
-    PrintWriter serverPrintOut;
-    Socket connectionSocket;
-    String IP;
-    String name;
-    int colonIndex;
+    private InputStream inputToServer;
+    private OutputStream outputFromServer;
+    private Scanner scanner;
+    private PrintWriter serverPrintOut;
+    private Socket connectionSocket;
+    private String IP;
+    private String name;
+    private int colonIndex;
+
+    /**
+     * Constructor
+     * @param connectionSocket The socket to connect to
+     */
     public ConnectionThread(Socket connectionSocket){
         try{
             IP = connectionSocket.getRemoteSocketAddress().toString();
@@ -31,6 +40,9 @@ public class ConnectionThread extends Thread{
         }
     }
 
+    /**
+     * Gets and sends input to the server
+     */
     @Override 
     public void run(){
         boolean done = false;
@@ -45,6 +57,9 @@ public class ConnectionThread extends Thread{
         }
     }
 
+    /**
+     * Allows new users to pick a username
+     */
     public void pickUsername(){
         serverPrintOut.println("Please Choose a Username:");
         Scanner usernameScanner = new Scanner(inputToServer, "UTF-8");
