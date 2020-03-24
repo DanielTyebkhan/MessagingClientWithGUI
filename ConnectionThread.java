@@ -36,10 +36,7 @@ public class ConnectionThread extends Thread{
         boolean done = false;
         while(!done && scanner.hasNextLine()){
             String line = scanner.nextLine();
-            for(ConnectionThread c: Server.clients){
-                c.serverPrintOut.println(name + ": " + line);
-            }
-            System.out.println(name + ": " + line);
+            Server.printMessage(name, line);
             if(line.toLowerCase().trim().equals("exit")){
                 serverPrintOut.println("Terminating Connection");
                 try{connectionSocket.close();}catch(Exception e){System.out.println(e);}

@@ -3,10 +3,10 @@ import java.io.*;
 import java.util.*;
 public class Server{ 
     public static final int PORT = 9991;
-    public static ArrayList<ConnectionThread> clients;
-    public static HashMap clientMap;
-
     public static final String LOCATION = Server.class.getProtectionDomain().getCodeSource().getLocation().getFile() +"users.txt";
+
+    private static ArrayList<ConnectionThread> clients;
+    private static HashMap clientMap;
 
     public static void main(String[] args){
         clients = new ArrayList <>();
@@ -81,4 +81,11 @@ public class Server{
 			System.out.println(e + "error setting username");
 		}
 	}
+
+	public static void printMessage(String name, String line){
+        for(ConnectionThread c: Server.clients){
+            c.serverPrintOut.println(name + ": " + line);
+        }
+        System.out.println(name + ": " + line);
+    }
 }
