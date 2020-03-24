@@ -65,4 +65,13 @@ public class ConnectionThread extends Thread{
         Scanner usernameScanner = new Scanner(inputToServer, "UTF-8");
 		Server.setUsername(IP, usernameScanner.nextLine());
     }
+
+    /**
+     * Shows a message from the server to the user
+     * @param user The user who sent the message
+     * @param message The message being sent
+     */
+    public void showMessage(String user, String message){
+        serverPrintOut.println(user + ": " + message);
+    }
 }

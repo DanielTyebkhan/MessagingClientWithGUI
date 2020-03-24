@@ -109,7 +109,7 @@ public class Server{
      */
 	public static void printMessage(String name, String line){
         for(ConnectionThread c: Server.clients){
-            c.serverPrintOut.println(name + ": " + line);
+            c.showMessage(name, line);
         }
         System.out.println(name + ": " + line);
     }
