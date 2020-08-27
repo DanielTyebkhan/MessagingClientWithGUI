@@ -24,9 +24,6 @@ class UserGUI{
     private PrintWriter serverPrintOut;
     private Boolean firstprint;
 
-    /**
-     * Constructor
-     */
     public UserGUI(){
         firstprint = true;
         while(!requestConnection()){
